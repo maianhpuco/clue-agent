@@ -1,0 +1,117 @@
+{
+  "dataset": "camelyon16",
+  "label_desc": "breast carcinoma metastasis in sentinel lymph node",
+  "sources": [
+    "pubmed",
+    "wikipedia"
+  ],
+  "keywords": [
+    "subcapsular sinus metastasis breast carcinoma lymph node",
+    "cohesive epithelial nests capsule breach low-power histology",
+    "nuclear atypia mitotic figures 20x histology",
+    "germinal center tingible macrophages histology mimic",
+    "sinus histiocytes foamy macrophages mimic",
+    "endothelial lining lymphatic vs epithelial nests",
+    "lymphovascular emboli lymph node metastasis",
+    "capsule hilum adipose lymph node architecture",
+    "necrosis tumor nests lymph node",
+    "reactive lymphoid follicles vs metastasis"
+  ],
+  "results": [
+    {
+      "title": "Prognostic Impact of Immunophenotypic Variation in Subcapsular Sinus Endothelium of Sentinel Lymph Nodes in Invasive Breast Carcinoma.",
+      "snippet": "Several studies demonstrated the de novo formation of lymphatic vessels in tumor-draining lymph nodes (LNs), partly preceding lymphatic metastases. This \"lymphovascular niche\" supposedly facilitates survival of metastatic tumor cells. This study aims at evaluating the previously observed immunophenotypic variations of subcapsular endothelial cells (SECs) in a larger cohort by software-assisted image analysis. Suitable cases with sentinel-LN (SLN) of invasive breast cancer were identified in the Institute of Pathology, corresponding data were extracted. LN of 231 patients were stained for HE, D2-40, CD31, and Prox1. QuPath software was used for assessing the immunohistochemical stained area of endothelial cells of the subcapsular sinus. The Cutoff Finder web application was used for identif",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40256677/",
+      "_origin_query": "subcapsular sinus metastasis breast carcinoma lymph node"
+    },
+    {
+      "title": "Altered immune signatures in breast cancer lymph nodes with metastases revealed by spatial proteome analyses.",
+      "snippet": "Metastasis to lymph nodes is strongly associated with reduced survival in breast cancer patients. To increase the understanding on how lymph node metastasis impairs the local immune response in affected lymph nodes, we here studied spatial proteomic changes of critical lymph node immune populations in uninvolved lymph nodes (UnLN) and paired lymph nodes with metastases (LNM) from five breast cancer patients. The proteome was analyzed for cortical lymphocyte compartments, subcapsular sinus (SCS) and medullary sinus (MS) CD169 Our results identified a stable proteome of SCS CD169 The findings from our study support the notion that metastasis to lymph nodes in breast cancer patients modifies local immune responses. These changes may contribute to explain unsuccessful therapeutic responses, an",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40211433/",
+      "_origin_query": "subcapsular sinus metastasis breast carcinoma lymph node"
+    },
+    {
+      "title": "Multiscale deep learning framework captures systemic immune features in lymph nodes predictive of triple negative breast cancer outcome in large-scale studies.",
+      "snippet": "The suggestion that the systemic immune response in lymph nodes (LNs) conveys prognostic value for triple-negative breast cancer (TNBC) patients has not previously been investigated in large cohorts. We used a deep learning (DL) framework to quantify morphological features in haematoxylin and eosin-stained LNs on digitised whole slide images. From 345 breast cancer patients, 5,228 axillary LNs, cancer-free and involved, were assessed. Generalisable multiscale DL frameworks were developed to capture and quantify germinal centres (GCs) and sinuses. Cox regression proportional hazard models tested the association between smuLymphNet-captured GC and sinus quantifications and distant metastasis-free survival (DMFS). smuLymphNet achieved a Dice coefficient of 0.86 and 0.74 for capturing GCs and ",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37230111/",
+      "_origin_query": "subcapsular sinus metastasis breast carcinoma lymph node"
+    },
+    {
+      "title": "Nodal lymphangiogenesis and immunophenotypic variations of sinus endothelium in sentinel and non-sentinel lymph nodes of invasive breast carcinoma.",
+      "snippet": "Several studies have demonstrated the de novo formation of lymphatic vessels or the reorganization of lymphatic sinus in tumor-draining lymph nodes, partly preceding the detection of lymphatic metastases. This \"lymphovascular niche\"is supposed to facilitate the survival of metastatic tumor cells. Few studies on nodal lymphangiogenesis in invasive breast cancer (BC) have been published, not considering tumor-free sentinel lymph nodes (SLN) and tumor types. Specimens of SLN and/ or non-SLN (NSLN) of 95 patients with BC were examined immunohistochemically for expression of the lymphatic endothelial marker D2-40 (podoplanin) on lymphatic vessels and the subcapsular sinus. The number of D2-40-positive lymph vessels in metastases was evaluated with two morphometric methods (Chalkley count and nu",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36693068/",
+      "_origin_query": "subcapsular sinus metastasis breast carcinoma lymph node"
+    },
+    {
+      "title": "Co-localization of CD169",
+      "snippet": "Breast cancer is the most common form of cancer in women worldwide. Although the survival among breast cancer patients has improved, there is still a large group of patients with dismal prognosis. One of the most important prognostic factors for poor prognosis is lymph node metastasis. Increasing knowledge concerning the lymph nodes of breast cancer patients indicates that they are affected by the primary tumor. In this study we show that presence of CD169",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/33299660/",
+      "_origin_query": "subcapsular sinus metastasis breast carcinoma lymph node"
+    },
+    {
+      "title": "Expression of Long Non-Coding RNA-NEAT-1 in Papillary Thyroid Carcinoma in Relation to Immunohistochemical expression of CD8 and PD-L1 as Indicators of Tumor Immune Microenvironment.",
+      "snippet": "Investigation of CD8 and PD-L1 immunohistochemical expression, as indicators of tumor microenvironment in PTC, and their correlation with lncRNA-NEAT1 expression. Quantitative determination of relative expression level of lncRNA-NEAT1 using the real-time PCR (RT-qPCR) and evaluation of CD8 and PD-L1 immunohistochemical expression in 47 specimens of PTC tissue compared to 5 controls of normal thyroid tissue. The results were analyzed for their association with the clinicopathological parameters of the studied cases. Compared to control specimens, LncRNA-NEAT1 expression levels were considerably higher in PTC cases (p=0.000), and they were also significantly higher in patients with nodal metastases and lymphovascular emboli (LVE) (p=0.003 and 0.002 respectively). There were significant assoc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40849726/",
+      "_origin_query": "lymphovascular emboli lymph node metastasis"
+    },
+    {
+      "title": "Evidence for the Prognostic Value of CDH17 Expression in Colorectal Carcinoma.",
+      "snippet": "Colorectal cancer (CRC) diagnosed in an advanced stage has an increased predisposition for invasion and metastasis, requiring upgraded prognostic markers. CDH17, a liver-intestine cadherin, is an adhesion molecule implicated in tumor progression. This retrospective study assessed the immunohistochemical expression of CDH17 in 84 CRC cases with lymphovascular invasion (LVI), analyzing its correlation with clinicopathological features and survival outcomes. CDH17 expression was evaluated in the tumor core, invasive front, tumor emboli, and lymph node metastases. Statistical analyses showed significant associations between high CDH17 expression and favorable histological types, as well as low-grade differentiation. However, high CDH17 levels in tumor emboli correlated with advanced T stage an",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40725206/",
+      "_origin_query": "lymphovascular emboli lymph node metastasis"
+    },
+    {
+      "title": "Study on Tumor Budding and Immunoexpression of Cancer Stem Cell Marker ALDH1 in Oral Squamous Cell Carcinoma.",
+      "snippet": "Background Tumor budding refers to the presence of individual cancer cells or small clusters of cells that break away from the main tumor and are seen at the edge where the tumor is invading surrounding tissue. Aldehyde dehydrogenase 1 is a cancer stem cell marker that causes oxidation of retinol to retinoic acid in early stem cell differentiation. This study aimed to examine tumor budding in oral squamous cell carcinoma and explore how it relates to various clinical and pathological factors. A study of cancer stem cell marker ALDH1 was also done with correlation to tumor budding and prognostic markers. Material and methods A prospective study was carried out in a pathology department over one year and included all newly diagnosed cases of oral squamous cell carcinoma that had undergone su",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40432626/",
+      "_origin_query": "lymphovascular emboli lymph node metastasis"
+    },
+    {
+      "title": "Initiation of tumor dormancy by the lymphovascular embolus.",
+      "snippet": "Cancer dormancy followed by recurrence remains an enigma in cancer biology. Since both local and systemic recurrences are thought to emanate from dormant micrometastasis which take origin from lymphovascular tumor emboli we wondered whether the process of dormancy might initiate within lymphovascular emboli. This study combines experimental studies with a patient-derived xenograft (PDX) of inflammatory breast cancer (Mary-X) that spontaneously forms spheroids",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39392391/",
+      "_origin_query": "lymphovascular emboli lymph node metastasis"
+    },
+    {
+      "title": "Prognostic Role of Tumor Budding and Worst Pattern of Invasion in Lymph Node Metastasis and Disease-Free Survival in Oral Squamous Cell Cancer Patients: Result from Central India's Regional Cancer Centre.",
+      "snippet": "To study the role of pattern of invasion, tumor budding and other clinicopathological parameters in determining the risk of nodal metastases and disease-free survival in oral squamous cell cancer patients. The data of 90 patients with oral squamous cell carcinoma who underwent surgery as their primary modality of treatment were retrospectively analysed. Predictive significance of clinicopathological parameters was assessed with Univariate analysis with Fisher exact test and unpaired t-test. The factors which were significant on Univariate analysis were then analysed with multivariate analysis using logistic regression model to find independent predictors. The age of the patients ranged from 22yrs to 72 years with male predominance (81.1%). The most common site of involvement was buccal muc",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39130226/",
+      "_origin_query": "lymphovascular emboli lymph node metastasis"
+    },
+    {
+      "title": "Oncocytic Mucoepidermoid Carcinoma of the Parotid Gland.",
+      "snippet": "A 30-year-old man presented with a multilobulated left parotid mass measuring 5.2 × 4.1 × 2.4 cm by imaging, and numerous enlarged left cervical lymph nodes, suspicious for metastasis. FNA cytopathology of the mass showed loose clusters of large cells displaying increased N/C ratios and ample granular oncocytic cytoplasm. A superficial left parotidectomy with radical resection of the cheek and cervical lymphadenectomy was performed. Histopathologic examination disclosed a circumscribed, unencapsulated neoplasm exhibiting a solid growth pattern composed of infiltrative islands and nests of cohesive, polygonal, oncocytoid cells in a densely fibrous stroma. Lesional cells exhibited enlarged, oval, open-face nuclei with coarse chromatin and a single acidophilic macronucleolus, voluminous eosin",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40088351/",
+      "_origin_query": "necrosis tumor nests lymph node"
+    },
+    {
+      "title": "High-grade Endometrial Endometrioid Carcinoma: A Case Report of Complete Transdifferentiation to Pilomatrix-like Carcinoma.",
+      "snippet": "IntroductionEndometrial endometrioid carcinomas can show multiple lines of differentiation, including pilomatrix-like high-grade endometrioid carcinoma, a recently described tumor with similarity to cutaneous pilomatrix carcinoma and associated with very aggressive clinical behavior.MethodsWe present a 56-year-old woman with an endometrial tumor associated with secondary involvement of both ovaries, left tubo-ovarian ligament and obturator lymph nodes. The diagnosis of high-grade endometrioid carcinoma in a previously performed curettage was confirmed in the hysterectomy specimen.ResultsMicroscopically, the tumor exhibited a solid, nested/insular pattern with basaloid cells, predominantly seen at the periphery, ghost cell keratinization towards the center of the nests, and extensive geogra",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40084710/",
+      "_origin_query": "necrosis tumor nests lymph node"
+    },
+    {
+      "title": "Subcutaneous Nodules of the Vulva.",
+      "snippet": "A 32-year-old patient complained of three slow-growing subcutaneous nodules on her right labius majus, present for 3 years. Her past medical history was unremarkable. Cutaneous examination revealed three subcutaneous nodules of 1 cm diameter firmly adherent to the underlying tissues, located on her right labium majorum (Figure 1). Regional lymph nodes were not enlarged. She underwent an excision biopsy of a subcuta-neous nodule under local anesthesia. The gross specimen was firm, white and fleshy in appearance. A skin biopsy was performed, and histological findings revealed a non-encapsulated dermal nodule composed of clusters of polygonal cells with small central nuclei and abundant eosinophilic cytoplasm (Figure 2a). The tumor cells formed sheets and nests irregularly infiltrating betwee",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39090016/",
+      "_origin_query": "necrosis tumor nests lymph node"
+    },
+    {
+      "title": "MED15::ATF1-Rearranged Tumor: A Novel Cutaneous Tumor With Melanocytic Differentiation.",
+      "snippet": "We recently described novel dermal tumors with melanocytic differentiation and morphologic and biological similarities to cutaneous clear cell sarcoma, including CRTC1::TRIM11 cutaneous tumor, and clear cell tumors with melanocytic differentiation and either ACTIN::MITF or MITF::CREM. Here, we describe a series of 3 patients presenting with tumors reminiscent of CRTC1::TRIM11 cutaneous tumor, found to demonstrate a novel MED15::ATF1 fusion. All 3 patients were children (5-16 years old). Primary excision of case 1 showed a circumscribed wedge-shaped silhouette with peripheral intercalation into collagen fibers and scattered lymphoid aggregates. All 3 tumors abutted the epidermis; one showed a junctional component. Tumors were highly cellular and comprised of monomorphic, oval-to-round epith",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38278485/",
+      "_origin_query": "necrosis tumor nests lymph node"
+    },
+    {
+      "title": "Case Report: Recurrent colonic metastasis from lung cancer-diagnostic pitfalls and therapeutic challenge of a peculiar case.",
+      "snippet": "Lung cancer (LC) mortality exceeds 20%, and detecting metastases from LC is becoming a challenging step in understanding the real prognostic role of specific localization. We report a case of a patient with lung metastasis to the colon with local recurrence at the anastomosis after radical resection for metastasis. In both cases, the diagnosis was on oncological follow-up, and surgery was offered in consideration of reasonable life expectancy, good control of LC, and high risk of intestinal occlusion. A 67-year-old male, with a history of LC 18 months ago, was referred to our surgical unit after a positron emission tomography CT total body, where an area of intense glucose metabolism (SUV max: 35.6) at the hepatic colic flexure was reported. A colonoscopy revealed an ulcerated, bleeding la",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/38186393/",
+      "_origin_query": "necrosis tumor nests lymph node"
+    }
+  ],
+  "concepts": [
+    "subcapsular cohesive tumor nests at lymph node capsule",
+    "nuclear atypia and mitotic figures at high power",
+    "sinus histiocytes mimic tumor at low power"
+  ]
+}

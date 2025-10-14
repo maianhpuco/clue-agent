@@ -1,0 +1,11 @@
+{
+  "dataset": "camelyon16",
+  "label_desc": "breast carcinoma metastasis in sentinel lymph node",
+  "sources": [
+    "pubmed",
+    "wikipedia"
+  ],
+  "keywords": [],
+  "results": [],
+  "concepts": []
+}

@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Tumor",
+    "definition": "Malignant epithelial proliferation/metastasis.",
+    "synonyms": ["carcinoma", "metastasis"],
+    "concept_type": "class",
+    "positives": ["cohesive epithelial islands", "nuclear atypia", "mitoses", "peripheral palisading"],
+    "negatives": ["adipocytes", "dense collagen stroma", "lymphoid follicles"],
+    "magnifications": ["20x", "40x"]
+  },
+  {
+    "name": "Normal",
+    "definition": "Non-neoplastic tissue compartments.",
+    "synonyms": ["benign"],
+    "concept_type": "class",
+    "positives": ["ordered lymphoid follicles", "mature adipocytes", "regular stromal collagen"],
+    "negatives": ["malignant epithelial clusters", "necrosis"],
+    "magnifications": ["10x", "20x"]
+  },
+  {
+    "name": "Lymphoid tissue",
+    "definition": "Tissue composed of lymphocytes and supporting cells.",
+    "synonyms": ["lymphatic tissue"],
+    "concept_type": "compartment",
+    "positives": ["lymphoid follicles", "germinal centers", "paracortex"],
+    "negatives": ["tumor nests", "necrosis"],
+    "magnifications": ["10x", "20x"]
+  },
+  {
+    "name": "Adipose tissue",
+    "definition": "Loose connective tissue composed of adipocytes.",
+    "synonyms": ["fat tissue"],
+    "concept_type": "compartment",
+    "positives": ["mature adipocytes", "lipid vacuoles"],
+    "negatives": ["tumor cells", "lymphoid follicles"],
+    "magnifications": ["10x", "20x"]
+  },
+  {
+    "name": "Stroma",
+    "definition": "Supportive connective tissue surrounding cells.",
+    "synonyms": ["connective tissue"],
+    "concept_type": "compartment",
+    "positives": ["collagen fibers", "fibroblasts", "extracellular matrix"],
+    "negatives": ["tumor nests", "necrosis"],
+    "magnifications": ["10x", "20x"]
+  },
+  {
+    "name": "Tumor nest",
+    "definition": "Aggregates of malignant cells forming distinct clusters.",
+    "synonyms": ["tumor islands"],
+    "concept_type": "morphology",
+    "positives": ["irregular borders", "cellular pleomorphism", "high nuclear-to-cytoplasmic ratio"],
+    "negatives": ["lymphoid follicles", "adipose tissue"],
+    "magnifications": ["20x", "40x"]
+  },
+  {
+    "name": "Tumor–stroma interface",
+    "definition": "Boundary between tumor cells and surrounding stroma.",
+    "synonyms": ["tumor margin"],
+    "concept_type": "interface",
+    "positives": ["invasive growth patterns", "desmoplastic reaction"],
+    "negatives": ["normal stroma", "lymphoid tissue"],
+    "magnifications": ["20x", "40x"]
+  },
+  {
+    "name": "Necrosis",
+    "definition": "Cell death characterized by loss of cellular integrity.",
+    "synonyms": ["tissue death"],
+    "concept_type": "morphology",
+    "positives": ["karyolysis", "karyorrhexis", "inflammatory infiltrate"],
+    "negatives": ["normal tissue", "lymphoid follicles"],
+    "magnifications": ["20x", "40x"]
+  }
+]
