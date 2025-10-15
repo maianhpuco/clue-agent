@@ -1,13 +1,16 @@
-# Env
-.env
-.env.*
-!.env.example
-
-# Caches
+# Python & env
 __pycache__/
-*.py[cod]
-.pytest_cache/
-.mypy_cache/
+*.pyc
+.venv/
+.env
+
+# Tools
+.python-version
+uv.lock
+
+# OS
+.DS_Store
+
 
 # Backups (any depth)
 backup/
