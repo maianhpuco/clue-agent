@@ -1,0 +1,61 @@
+Role
+You are a board-certified pathologist. The dataset is "{{DATASET_NAME}}",
+which has {{NUM_CLASSES}} high-level class(es).
+
+Dataset class descriptions
+The following short descriptions summarize the dataset classes and what constitutes positives/negatives. Use them to anchor definitions and include commonly confused morphologies.
+
+{{CLASS_DESCRIPTIONS}}
+
+Goal
+For each high-level class, enumerate the key pathology **morphology concepts**
+that commonly appear in slide patches (and those that are commonly confused
+with them). Include the magnification levels (10x, 20x, 40x) at which each
+concept is best recognized.
+
+Return format
+OUTPUT JSON ONLY (no prose, no markdown). Return a JSON array where each
+item has EXACTLY these fields:
+
+- name                         # string
+- definition                   # one short, morphology-dense sentence
+- synonyms                     # list[string], deduplicated; lowercase where natural
+- concept_type                 # one of {class, compartment, morphology, interface, substructure}
+- positives                    # list[string], 3–6 key patch-scale cues present
+- negatives                    # list[string], 3–6 confounders/exclusions at patch scale
+- magnifications               # list[string], any of ["10x","20x","40x"] where recognition is best
+
+Guidance
+- Keep medical wording concise and specific (no narrative).
+- Positives/negatives should be patch-scale cues (not diagnoses).
+- Include **compartments** (e.g., stroma, lymphoid tissue), **morphologies**
+  (e.g., tumor nests, necrosis), and **interfaces** (e.g., tumor–stroma interface).
+- If a concept is typically recognized at multiple magnifications, list them all.
+
+Camelyon example (minimum set to include when DATASET_NAME = "Camelyon16")
+- Normal (class), Tumor (class),
+- Lymphoid tissue (compartment), Adipose tissue (compartment), Stroma (compartment),
+- Tumor nest (morphology), Tumor–stroma interface (interface), Necrosis (morphology).
+If any are missing, add them with reasonable definitions/synonyms.
+
+Example items (format only; continue for all concepts)
+[
+  {
+    "name": "Tumor",
+    "definition": "Malignant epithelial proliferation/metastasis.",
+    "synonyms": ["carcinoma", "metastasis"],
+    "concept_type": "class",
+    "positives": ["cohesive epithelial islands", "nuclear atypia", "mitoses", "peripheral palisading"],
+    "negatives": ["adipocytes", "dense collagen stroma", "lymphoid follicles"],
+    "magnifications": ["20x","40x"]
+  },
+  {
+    "name": "Normal",
+    "definition": "Non-neoplastic tissue compartments.",
+    "synonyms": ["benign"],
+    "concept_type": "class",
+    "positives": ["ordered lymphoid follicles", "mature adipocytes", "regular stromal collagen"],
+    "negatives": ["malignant epithelial clusters", "necrosis"],
+    "magnifications": ["10x","20x"]
+  }
+]

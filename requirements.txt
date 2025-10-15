@@ -5,6 +5,7 @@ rich>=13.7,<14
 backoff>=2.2,<3
 openai>=1.43,<2
 lxml>=5.2,<6
+fastmcp>=0.1,<1
 
 # --- LangChain stack (aligned on core 0.3.x) ---
 langchain>=0.3.7,<0.4
