@@ -1,2 +1,0 @@
-* **Tumor (positive)** in CAMELYON16 = an H&E whole-slide image (WSI) of a **sentinel lymph node that contains metastatic breast carcinoma** (macro- or micro-metastases; isolated tumor cells were annotated in training slides but not treated as a separate positive class in evaluation)
-* **Normal (negative)** = an H&E WSI of a **lymph node without metastatic carcinoma** (benign tissue only—lymphoid parenchyma, adipose, stroma, etc.). 
