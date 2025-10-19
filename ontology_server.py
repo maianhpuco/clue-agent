@@ -1,270 +1,159 @@
 #!/usr/bin/env python3
 """
-MCP Server: Ontology Builder (stdio transport)
-Generates ontology-ready concept JSON from class descriptions, validates, and persists.
+MCP Server: Ontology Knowledge Search (stdio)
+- search_literature: query literature indices (Europe PMC, PubMed, Semantic Scholar, etc.) and persist hits
+- search_pathology_reference: pull high-yield pathology reference snippets to cache locally
+- search_terminology: query ontology services for definitions, synonyms, and relationships
+- fetch_results: retrieve stored hits for a keyword (optionally filtered by source)
 """
 
 from __future__ import annotations
 
-import datetime as dt
 import json
-import os
-from typing import Any, Dict, List, Tuple
+from typing import Optional
 
-# FastMCP runtime
 try:
     from fastmcp import FastMCP
-except ImportError as exc:  # pragma: no cover - ensures helpful error when dependency missing
-        raise SystemExit("fastmcp is not installed. Run: pip install fastmcp") from exc
+except ImportError as exc:
+    raise SystemExit("fastmcp is not installed. Run: pip install fastmcp") from exc
 
-DATA_ROOT = os.environ.get("ONTOLOGY_DATA_ROOT", "ontology_data")
+from ontology_services.extraction import run_extraction
+from ontology_services.ontology_builder import build_and_save_tree
+from ontology_services.providers import (
+    LITERATURE_PROVIDERS,
+    ONTOLOGY_PROVIDERS,
+    PATHOLOGY_PROVIDERS,
+    LiteratureSource,
+    OntologySource,
+    PathologySource,
+)
+from ontology_services.search import execute_search
+from ontology_services.storage import read_results, read_search
 
-mcp = FastMCP("ontology_builder")
-
-# ----------------------------
-# LLM stub (plug your model)
-# ----------------------------
-def call_llm(prompt: str, model: str = "gpt-4o-mini", temperature: float = 0.2) -> str:
-    """
-    Return STRICT JSON (string). Replace with your provider call.
-    - Must return a JSON array of items with the exact fields required.
-    """
-    # TODO: Plug in OpenAI/Anthropic/local call here and return raw text.
-    # For now, we return a tiny, schema-correct seed to keep the pipeline functional.
-    seed = [
-        {
-            "name": "Tumor",
-            "definition": "Malignant epithelial proliferation/metastasis in lymph node.",
-            "synonyms": ["carcinoma", "metastasis"],
-            "concept_type": "class",
-            "positives": ["cohesive epithelial islands", "nuclear atypia", "mitoses"],
-            "negatives": ["ordered lymphoid follicles", "adipocytes", "dense collagen stroma"],
-            "magnifications": ["20x", "40x"],
-        },
-        {
-            "name": "Normal",
-            "definition": "Non-neoplastic nodal compartments with preserved architecture.",
-            "synonyms": ["benign"],
-            "concept_type": "class",
-            "positives": ["germinal centers", "sinus histiocytes", "regular stromal collagen"],
-            "negatives": ["malignant epithelial clusters", "necrosis"],
-            "magnifications": ["10x", "20x"],
-        },
-    ]
-    return json.dumps(seed, indent=2)
-
-
-# ----------------------------
-# Prompt builder
-# ----------------------------
-def build_prompt(dataset_name: str, class_desc_json: str, num_classes_hint: int | None = None) -> str:
-    try:
-        class_descriptions = json.loads(class_desc_json)
-    except json.JSONDecodeError:
-        class_descriptions = {"_raw": class_desc_json}
-
-    num_classes = num_classes_hint or (
-        len(class_descriptions) if isinstance(class_descriptions, dict) else None
-    )
-    class_blob = json.dumps(class_descriptions, indent=2, ensure_ascii=False)
-
-    return f"""
-Role
-You are a board-certified pathologist. The dataset is "{dataset_name}",
-which has {num_classes} high-level class(es).
-
-Dataset class descriptions
-The following short descriptions summarize the dataset classes and what constitutes positives/negatives. Use them to anchor definitions and include commonly confused morphologies.
-
-{class_blob}
-
-Goal
-For each high-level class, enumerate the key pathology morphology concepts
-that commonly appear in slide patches (and those that are commonly confused
-with them). Include the magnification levels (10x, 20x, 40x) at which each
-concept is best recognized.
-
-Return format
-OUTPUT JSON ONLY (no prose, no markdown). Return a JSON array where each
-item has EXACTLY these fields:
-
-- name
-- definition
-- synonyms
-- concept_type              # one of ["class","compartment","morphology","interface","substructure"]
-- positives                 # list[str], 3–6 patch-scale cues present
-- negatives                 # list[str], 3–6 patch-scale confounders/exclusions
-- magnifications            # list[str] from ["10x","20x","40x"]
-
-Guidance
-- Keep medical wording concise and specific (no narrative).
-- Positives/negatives are patch-scale cues (not diagnoses).
-- Include compartments (e.g., stroma, lymphoid tissue), morphologies (e.g., tumor nests, necrosis),
-  and interfaces (e.g., tumor–stroma interface).
-- If a concept is recognized at multiple magnifications, list them all.
-
-Camelyon example concepts to ensure coverage when applicable:
-- Normal (class), Tumor (class),
-- Lymphoid tissue (compartment), Adipose tissue (compartment), Stroma (compartment),
-- Tumor nest (morphology), Tumor–stroma interface (interface), Necrosis (morphology).
-
-IMPORTANT
-- Return STRICT JSON array only. No comments. No markdown. No trailing text.
-"""
-
-
-# ----------------------------
-# Validation / normalization
-# ----------------------------
-ALLOWED_TYPES = {"class", "compartment", "morphology", "interface", "substructure"}
-ALLOWED_MAGS = {"10x", "20x", "40x"}
-
-
-def slugify(value: str) -> str:
-    safe = []
-    for ch in value:
-        if ch.isalnum():
-            safe.append(ch.lower())
-        elif ch in "-_ ":
-            safe.append("-")
-        else:
-            safe.append("-")
-    return "-".join("".join(safe).split("-")) or "concept"
-
-
-def validate_item(item: Dict[str, Any]) -> Tuple[bool, List[str]]:
-    errors: List[str] = []
-    for field in ["name", "definition", "synonyms", "concept_type", "positives", "negatives", "magnifications"]:
-        if field not in item:
-            errors.append(f"Missing field: {field}")
-    if "concept_type" in item and item["concept_type"] not in ALLOWED_TYPES:
-        errors.append(f"concept_type must be one of {sorted(ALLOWED_TYPES)}")
-    if "magnifications" in item:
-        magnifications = set(item["magnifications"])
-        if not magnifications.issubset(ALLOWED_MAGS):
-            errors.append(f"magnifications must be subset of {sorted(ALLOWED_MAGS)}")
-    for field in ["positives", "negatives"]:
-        if field in item:
-            values = item[field] or []
-            if not (3 <= len(values) <= 6):
-                errors.append(f"{field} must have 3–6 items")
-    return (len(errors) == 0, errors)
-
-
-def normalize_items(items: List[Dict[str, Any]], namespace: str) -> List[Dict[str, Any]]:
-    seen_synonyms = set()
-    normalized = []
-    for item in items:
-        synonyms = []
-        for synonym in item.get("synonyms", []):
-            cleaned = synonym.strip()
-            lowered = cleaned.lower()
-            if lowered and lowered not in seen_synonyms:
-                synonyms.append(lowered)
-                seen_synonyms.add(lowered)
-        concept_id = f"{namespace}/{slugify(item['name'])}"
-        normalized.append({**item, "synonyms": synonyms, "id": concept_id})
-    return normalized
-
-
-def persist_run(
-    dataset_name: str, prompt: str, raw_json: str, validated: List[Dict[str, Any]]
-) -> Dict[str, str]:
-    dataset_dir = os.path.join(DATA_ROOT, dataset_name)
-    os.makedirs(dataset_dir, exist_ok=True)
-
-    run_dir = os.path.join(
-        dataset_dir, "runs", dt.datetime.utcnow().strftime("%Y-%m-%dT%H-%M-%SZ")
-    )
-    os.makedirs(run_dir, exist_ok=True)
-
-    with open(os.path.join(run_dir, "prompt.txt"), "w", encoding="utf-8") as handle:
-        handle.write(prompt)
-    with open(os.path.join(run_dir, "raw_model.json"), "w", encoding="utf-8") as handle:
-        handle.write(raw_json)
-
-    concepts_path = os.path.join(dataset_dir, "concepts.json")
-    with open(concepts_path, "w", encoding="utf-8") as handle:
-        json.dump(validated, handle, indent=2, ensure_ascii=False)
-
-    with open(os.path.join(run_dir, "validated.json"), "w", encoding="utf-8") as handle:
-        json.dump(validated, handle, indent=2, ensure_ascii=False)
-
-    ontology_path = os.path.join(dataset_dir, "ontology.json")
-    ontology = {
-        "concepts": [
-            {"id": item["id"], "name": item["name"], "concept_type": item["concept_type"]}
-            for item in validated
-        ],
-        "relations": [],
-    }
-    with open(ontology_path, "w", encoding="utf-8") as handle:
-        json.dump(ontology, handle, indent=2, ensure_ascii=False)
-
-    return {
-        "concepts_path": concepts_path,
-        "ontology_path": ontology_path,
-        "run_dir": run_dir,
-    }
-
-
-# ----------------------------
-# MCP tools
-# ----------------------------
-@mcp.tool()
-def generate_concepts(dataset_name: str, class_descriptions_json: str, num_classes_hint: int = 0) -> str:
-    """
-    Generate schema-conformant concepts for a dataset.
-
-    Args:
-        dataset_name: e.g., "Camelyon16"
-        class_descriptions_json: JSON string mapping classes -> descriptions
-        num_classes_hint: optional integer
-
-    Returns:
-        STRICT JSON array (string) with required fields per item.
-    """
-    prompt = build_prompt(dataset_name, class_descriptions_json, num_classes_hint or None)
-    raw = call_llm(prompt)
-    return raw
+mcp = FastMCP("ontology_knowledge")
 
 
 @mcp.tool()
-def validate_and_persist(dataset_name: str, concepts_json: str) -> str:
-    """
-    Validate, normalize, assign stable IDs, and persist artifacts.
+def search_literature(
+    keyword: str,
+    source: LiteratureSource = "europe_pmc",
+    max_results: int = 5,
+) -> str:
+    """Query a literature source and persist results for later retrieval."""
+    return execute_search(keyword, source, "search_literature", max_results, LITERATURE_PROVIDERS)
 
-    Args:
-        dataset_name: e.g., "Camelyon16"
-        concepts_json: JSON array string returned by generate_concepts
 
-    Returns:
-        JSON string with {"status","errors","paths","count"}
+@mcp.tool()
+def search_pathology_reference(
+    keyword: str,
+    source: PathologySource = "pathology_outlines",
+    max_results: int = 5,
+) -> str:
+    """Retrieve curated surgical pathology references summarizing diagnostic cues."""
+    return execute_search(keyword, source, "search_pathology_reference", max_results, PATHOLOGY_PROVIDERS)
+
+
+@mcp.tool()
+def search_terminology(
+    keyword: str,
+    source: OntologySource = "ncbo_bioportal",
+    max_results: int = 5,
+) -> str:
+    """Lookup ontology and terminology sources for synonyms and hierarchical relations."""
+    return execute_search(keyword, source, "search_terminology", max_results, ONTOLOGY_PROVIDERS)
+
+
+@mcp.tool()
+def fetch_results(keyword: str, source: Optional[str] = None) -> str:
+    """Retrieve cached search results for a keyword."""
+    keyword = keyword.strip()
+    if not keyword:
+        return json.dumps({"status": "error", "error": "Keyword must not be empty."}, indent=2)
+
+    payload = read_results(keyword, source)
+    if not payload["sources"]:
+        return json.dumps(
+            {"status": "not_found", "keyword": keyword, "source": source, "message": "No cached results."},
+            indent=2,
+        )
+    payload["available_sources"] = sorted(payload["sources"])
+    return json.dumps({"status": "ok", "data": payload}, indent=2, ensure_ascii=False)
+
+
+@mcp.tool()
+def query_cache(
+    search_id: Optional[int] = None,
+    keyword: Optional[str] = None,
+    source: Optional[str] = None,
+    include_results: bool = True,
+    include_extractions: bool = True,
+) -> str:
+    """Query cached searches or extractions using flexible filters."""
+    if search_id is not None:
+        bundle = read_search(search_id, include_results=include_results, include_extractions=include_extractions)
+        if not bundle:
+            return json.dumps({"status": "not_found", "search_id": search_id}, indent=2)
+        return json.dumps({"status": "ok", "data": bundle}, indent=2, ensure_ascii=False)
+
+    if keyword:
+        payload = read_results(keyword.strip(), source)
+        if not payload["sources"]:
+            return json.dumps({"status": "not_found", "keyword": keyword, "source": source}, indent=2)
+        for src, entry in payload["sources"].items():
+            for search in entry.get("searches", []):
+                if not include_results:
+                    search.pop("results", None)
+                if not include_extractions:
+                    search.pop("extractions", None)
+        payload["available_sources"] = sorted(payload["sources"])
+        return json.dumps({"status": "ok", "data": payload}, indent=2, ensure_ascii=False)
+
+    return json.dumps({"status": "error", "error": "Provide either search_id or keyword."}, indent=2)
+
+
+@mcp.tool()
+def ontology_extract(
+    keyword: str,
+    source: Optional[str] = None,
+    search_id: Optional[int] = None,
+    max_context: int = 5,
+    extractor: str = "ontology_extract",
+    extraction: Optional[str] = None,
+) -> str:
     """
+    Build an ontology-focused prompt and summary from cached search results, optionally persisting structured output.
+    """
+    keyword = keyword.strip()
+    if not keyword:
+        return json.dumps({"status": "error", "error": "Keyword must not be empty."}, indent=2)
+    extraction_payload = None
+    if extraction:
+        try:
+            extraction_payload = json.loads(extraction)
+        except json.JSONDecodeError as exc:
+            return json.dumps({"status": "error", "error": f"Invalid extraction JSON: {exc}"}, indent=2)
     try:
-        items = json.loads(concepts_json)
-        assert isinstance(items, list)
+        result = run_extraction(
+            keyword=keyword,
+            source=source,
+            search_id=search_id,
+            max_context=max_context,
+            extractor=extractor,
+            extraction_payload=extraction_payload,
+        )
     except Exception as exc:
-        return json.dumps({"status": "error", "errors": [f"Invalid JSON array: {exc}"]}, indent=2)
+        return json.dumps({"status": "error", "error": str(exc)}, indent=2)
+    return json.dumps(result, indent=2, ensure_ascii=False)
 
-    errors: List[str] = []
-    for index, item in enumerate(items):
-        ok, item_errors = validate_item(item)
-        if not ok:
-            errors.extend([f"item[{index}]: {error}" for error in item_errors])
 
-    if errors:
-        return json.dumps({"status": "invalid", "errors": errors}, indent=2)
-
-    namespace = slugify(dataset_name)
-    normalized = normalize_items(items, namespace=namespace)
-    paths = persist_run(
-        dataset_name,
-        prompt="(omitted: see run/)",
-        raw_json=concepts_json,
-        validated=normalized,
-    )
-    return json.dumps({"status": "ok", "count": len(normalized), "paths": paths}, indent=2)
+@mcp.tool()
+def build_ontology_tree(include_base: bool = True, version_name: Optional[str] = None) -> str:
+    """Rebuild the ontology tree and persist a versioned JSON snapshot."""
+    try:
+        result = build_and_save_tree(include_base=include_base, version_name=version_name)
+    except Exception as exc:
+        return json.dumps({"status": "error", "error": str(exc)}, indent=2)
+    return json.dumps(result, indent=2, ensure_ascii=False)
 
 
 if __name__ == "__main__":

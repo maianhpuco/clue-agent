@@ -1,0 +1,17 @@
+{
+  "trace_id": "20251015T144301_3efe0a",
+  "started_at": "2025-10-15T14:43:01Z",
+  "query": "\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[Bquit",
+  "events": [
+    {
+      "type": "user",
+      "text": "\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[B\u001b[Bquit",
+      "timestamp": "2025-10-15T14:43:01Z"
+    },
+    {
+      "type": "assistant_text",
+      "text": "It seems like there might have been a keyboard input issue with multiple control characters being sent. Are you trying to exit or quit something? Or did you want to ask a question about medical literature, pathology, or terminology? \n\nI'm here to help you search for and extract information from medical and scientific literature. Please let me know what you're looking for, and I can assist you with the appropriate tools.",
+      "timestamp": "2025-10-15T14:43:04Z"
+    }
+  ]
+}

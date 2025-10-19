@@ -1,0 +1,6 @@
+servers:
+  ontology_knowledge:
+    command: ["python", "ontology_server.py"]
+    env:
+      DATASET_NAME: "Camelyon16"
+      ONTOLOGY_DOC_DIR: "documents"

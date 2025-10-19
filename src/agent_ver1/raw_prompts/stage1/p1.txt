@@ -1,5 +1,5 @@
 Role
-You are a board-certified pathologist. The dataset is "{{DATASET_NAME}}",
+You are a board-certified pathologist. ",
 which has {{NUM_CLASSES}} high-level class(es).
 
 Dataset class descriptions

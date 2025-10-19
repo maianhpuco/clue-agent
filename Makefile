@@ -32,6 +32,15 @@ ex1:
 	  --outdir runs/c16_simple \
 	  --k 5 \
 	  --model gpt-4o-mini 
+
+query-searches:
+	python tools/inspect_ontology_db.py searches
+
+query-results:
+	python tools/inspect_ontology_db.py results
+
+query-extractions:
+	python tools/inspect_ontology_db.py extractions
 # lint:
 # 	python -m pyflakes src || true
 

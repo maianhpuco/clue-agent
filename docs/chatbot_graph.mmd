@@ -1,0 +1,32 @@
+flowchart TD
+  A[User] -->|Query| B[chatbot.py]
+  subgraph Init[Initialization]
+    B --> C[load_dotenv()]
+    C --> D[Load server_config.yaml]
+    D --> E[Build Stdio params]
+    E --> F[Connect via stdio_client]
+    F --> G[ClientSession.initialize()]
+    G --> H[List tools]
+    H --> I[Map tool -> session]
+  end
+
+  I --> J{Chat loop}
+  J -->|input()| K[Build messages]
+  K --> L[Anthropic.messages.create(model, tools, messages)]
+
+  subgraph Iterate[Response/Tool loop]
+    L --> M{Block type}
+    M -->|text| N[Print assistant text]
+    M -->|tool_use| O[Queue tool request]
+    O --> P[session.call_tool(name, args)]
+    P --> Q[Format tool_result blocks]
+    Q --> R[Append tool_result to messages]
+    R --> S[Anthropic.messages.create(...)]
+    S --> M
+  end
+
+  M -->|no tool_use| T[Exit loop]
+  T --> U[Prompt next query]
+
+  style Init fill:#f6f8fa,stroke:#d0d7de,stroke-width:1px
+  style Iterate fill:#f6f8fa,stroke:#d0d7de,stroke-width:1px
