@@ -1,0 +1,17 @@
+{
+  "trace_id": "20251015T140552_4f1697",
+  "started_at": "2025-10-15T14:05:52Z",
+  "query": "\u001b[B\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[Aquit",
+  "events": [
+    {
+      "type": "user",
+      "text": "\u001b[B\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[A\u001b[Aquit",
+      "timestamp": "2025-10-15T14:05:52Z"
+    },
+    {
+      "type": "assistant_text",
+      "text": "I notice you've typed \"quit\" with some control characters before it. If you're trying to exit a program or session, typing just \"quit\" without the special characters might work better.\n\nIs there something specific you'd like help with regarding medical literature, pathology references, or terminology? I can assist you with searching for information using the available tools if you have a particular medical or pathology topic you're interested in.",
+      "timestamp": "2025-10-15T14:05:54Z"
+    }
+  ]
+}

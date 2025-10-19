@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
     "anthropic>=0.69.0",
+    "fastmcp>=2.12.4",
+    "mcp>=1.17.0",
     "nest-asyncio>=1.6.0",
     "python-dotenv>=1.1.1",
+    "pyyaml>=6.0.0",
 ]
